@@ -296,7 +296,7 @@ export default function App() {
             </div>
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">Item Analysis Pro</h1>
             <p className="text-gray-500 mt-1 max-w-2xl">
-              Calculate item difficulty, discrimination, and distractor effectiveness using the 25% upper/lower group method.
+              Calculate item difficulty, discrimination, and distractor effectiveness using the upper/lower group method.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
