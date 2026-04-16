@@ -12,15 +12,11 @@ import {
   CheckCircle2, 
   AlertCircle, 
   XCircle,
-  ChevronDown,
-  ChevronUp,
-  Download,
   RotateCcw,
   Camera,
   Loader2,
   Sparkles
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 import { GoogleGenAI, Type } from "@google/genai";
 
 type Option = 'A' | 'B' | 'C' | 'D';
@@ -35,7 +31,16 @@ interface ItemData {
   total: Record<Option, number>;
 }
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const getAI = () => {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    console.warn("GEMINI_API_KEY is not defined. Scanning feature will not work.");
+    return null;
+  }
+  return new GoogleGenAI({ apiKey });
+};
+
+const ai = getAI();
 
 export default function App() {
   const [items, setItems] = useState<ItemData[]>([
@@ -105,6 +110,11 @@ export default function App() {
   const handleScan = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (!ai) {
+      alert("Scanning feature is not available because the Gemini API key is missing. Please set GEMINI_API_KEY in your environment variables.");
+      return;
+    }
 
     setIsScanning(true);
     try {
